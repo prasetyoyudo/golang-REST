@@ -7,6 +7,7 @@ import (
 	"../entity"
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
+	"google.golang.org/api/option"
 )
 
 type repo struct {}
@@ -23,7 +24,7 @@ const (
 
 func (*repo) Save(post *entity.Post) (*entity.Post, error) {
 	ctx := context.Background()
-	client, err := firestore.NewClient(ctx, projectId )
+	client, err := firestore.NewClient(ctx, projectId, option.WithCredentialsFile("blog-api.json"))
 	if err != nil {
 		log.Fatalf("failed to create a firestore client: %v", err)
 		return nil, err
@@ -45,7 +46,7 @@ func (*repo) Save(post *entity.Post) (*entity.Post, error) {
 
 func (*repo) FindAll() ([]entity.Post, error) {
 	ctx := context.Background()
-	client, err := firestore.NewClient(ctx, projectId )
+	client, err := firestore.NewClient(ctx, projectId, option.WithCredentialsFile("blog-api.json"))
 	if err != nil {
 		log.Fatalf("failed to create a firestore client: %v", err)
 		return nil, err
